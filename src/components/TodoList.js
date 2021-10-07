@@ -21,7 +21,7 @@ export default function TodoList({ todo, index, markTodo, removeTodo }) {
 
     return (
         <Stack direction={["column", "row"]} spacing="5px" p={2}>
-            <Tag w="100%" style={{ textDecoration: todo.isDone ? "line-through" : "" }}>{todo.text}</Tag>
+            <Tag w="100%" style={{ textDecoration: todo.isDone ? "line-through" : "" }} color={todo.isDone ? "green" : ""}>{todo.text}</Tag>
             <Button leftIcon={<CheckIcon w={3} h={3} />} colorScheme="green" variant="solid"
                 onClick={() => markTodo(index)}><Text fontSize="sm">Done</Text></Button>{' '}
             <Button leftIcon={<CloseIcon w={3} h={3} />} colorScheme="red" variant="solid"

@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/button';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Stack, VStack, Heading } from '@chakra-ui/layout';
+import { Stack, VStack, Heading, Container } from '@chakra-ui/layout';
 import React from 'react'
 import FormTodo from './FormTodo';
 import TodoList from './TodoList';
@@ -58,63 +58,66 @@ export default function ToDo() {
     }
 
     return (
-        <Stack>
-            <VStack>
-                <FormTodo addTodo={addTodo} />
-            </VStack>
-            {todos.length > 0 &&
+        <Container>
+            <Stack>
+                <VStack>
+                    <FormTodo addTodo={addTodo} />
+                </VStack>
+                {todos.length > 0 &&
 
-                (<VStack pt={5}>
-                    <Heading as="h4" size="md">
-                        Todo List
-                    </Heading>
-                </VStack>)
-            }
+                    (<VStack pt={5}>
+                        <Heading as="h4" size="md">
+                            Todo List
+                        </Heading>
+                    </VStack>)
+                }
 
-            {todos.map((todo, index) => (
-                <TodoList
-                    key={index}
-                    index={index}
-                    todo={todo}
-                    markTodo={markTodo}
-                    removeTodo={removeTodo}
-                />
-            ))}
-            {todos.length > 1 && (
-                <Stack pt={10}>
-                    <Button type="submit" leftIcon={<DeleteIcon />} colorScheme="red" variant="solid" type="submit" onClick={() => setIsOpen(true)}>
-                        Clear List
-                    </Button>
-                    <AlertDialog
-                        isOpen={isOpen}
-                        leastDestructiveRef={cancelRef}
-                        onClose={onClose}
-                    >
-                        <AlertDialogOverlay>
-                            <AlertDialogContent>
-                                <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                                    Remove All Items in the List
-                                </AlertDialogHeader>
+                {todos.map((todo, index) => (
+                    <TodoList
+                        key={index}
+                        index={index}
+                        todo={todo}
+                        markTodo={markTodo}
+                        removeTodo={removeTodo}
+                    />
+                ))}
+                {todos.length > 1 && (
+                    <Stack pt={10}>
+                        <Button type="submit" leftIcon={<DeleteIcon />} colorScheme="red" variant="solid" onClick={() => setIsOpen(true)}>
+                            Clear List
+                        </Button>
+                        <AlertDialog
+                            isOpen={isOpen}
+                            leastDestructiveRef={cancelRef}
+                            onClose={onClose}
+                        >
+                            <AlertDialogOverlay>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                                        Remove All Items in the List
+                                    </AlertDialogHeader>
 
-                                <AlertDialogBody>
-                                    Are you sure? You can't undo this action afterwards.
-                                </AlertDialogBody>
+                                    <AlertDialogBody>
+                                        Are you sure? You can't undo this action afterwards.
+                                    </AlertDialogBody>
 
-                                <AlertDialogFooter>
-                                    <Button ref={cancelRef} onClick={onClose}>
-                                        Cancel
-                                    </Button>
-                                    <Button colorScheme="red" onClick={clearList} ml={3}>
-                                        Clear List
-                                    </Button>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialogOverlay>
-                    </AlertDialog>
-                </Stack>
-            )}
+                                    <AlertDialogFooter>
+                                        <Button ref={cancelRef} onClick={onClose}>
+                                            Cancel
+                                        </Button>
+                                        <Button colorScheme="red" onClick={clearList} ml={3}>
+                                            Clear List
+                                        </Button>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialogOverlay>
+                        </AlertDialog>
+                    </Stack>
+                )}
 
 
-        </Stack>
+            </Stack>
+        </Container>
+
     );
 }

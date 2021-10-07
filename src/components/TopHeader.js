@@ -1,23 +1,108 @@
 import React from 'react'
-import { Flex, Heading, Spacer } from "@chakra-ui/layout";
-import { IconButton } from "@chakra-ui/button";
-import { FaSun, FaMoon, FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { useColorMode } from "@chakra-ui/color-mode";
+import { Heading } from "@chakra-ui/layout";
+import { FaSun, FaMoon } from 'react-icons/fa'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom'
+import {
+    Box,
+    Flex,
+    Text,
+    IconButton,
+    Stack,
+    Collapse,
+    useColorModeValue,
+    useDisclosure,
+    List,
+    ListItem
+} from '@chakra-ui/react';
 
 export default function TopHeader() {
+
+    const { isOpen, onToggle } = useDisclosure();
 
     const { colorMode, toggleColorMode } = useColorMode();
     const isDark = colorMode === "dark";
 
     return (
-        <Flex w="100%">
-            <Heading ml="8" size="md" fontWeight="semibold" bgGradient='linear(to-r, cyan.400, blue.500, purple.600)' bgClip='text'>FullSpeed Technologies</Heading>
-            <Spacer></Spacer>
-            <IconButton icon={<FaLinkedin />} isRound='true'></IconButton>
-            <IconButton ml={2} icon={<FaInstagram />} isRound='true'></IconButton>
-            <IconButton ml={2} icon={<FaGithub />} isRound='true'></IconButton>
-            <IconButton ml={8} icon={isDark ? <FaSun /> : <FaMoon />} isRound='true' onClick={toggleColorMode}></IconButton>
+        <Box>
+            <Flex
+                bg={useColorModeValue('white', 'gray.800')}
+                color={useColorModeValue('gray.600', 'white')}
+                minH={'60px'}
+                py={{ base: 2 }}
+                px={{ base: 4 }}
+                borderBottom={1}
+                borderStyle={'solid'}
+                borderColor={useColorModeValue('gray.200', 'gray.900')}
+                align={'center'}>
+                <Flex
+                    flex={{ base: 1, md: 'auto' }}
+                    ml={{ base: -2 }}
+                    display={{ base: 'flex', md: 'none' }}>
+                    <IconButton
+                        onClick={onToggle}
+                        icon={
+                            isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+                        }
+                        variant={'ghost'}
+                        aria-label={'Toggle Navigation'}
+                    />
+                </Flex>
+                <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+                    <Heading onClick={() => window.open('https://www.fullspeedtechnologies.com/')} size="md" fontWeight="semibold"
+                        bgGradient='linear(to-r, cyan.400, blue.500, purple.600)' bgClip='text' cursor='pointer' >FullSpeed Technologies</Heading>
 
-        </Flex>
-    )
-}
+                    <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+                        <Link to="/">
+                            <Text>Dashboard</Text>
+                        </Link>
+                        <Link to="/todo-app">
+                            <Text pl={2}>Todo</Text>
+                        </Link>
+                        <Link to="/tictactoe-app">
+                            <Text pl={2}>Tictactoe</Text>
+                        </Link>
+                    </Flex>
+                </Flex>
+
+                <Stack
+                    flex={{ base: 1, md: 0 }}
+                    justify={'flex-end'}
+                    direction={'row'}
+                    spacing={6}>
+                    <IconButton ml={8} icon={isDark ? <FaSun /> : <FaMoon />} isRound='true' onClick={toggleColorMode}></IconButton>
+                </Stack>
+            </Flex>
+            <Collapse in={isOpen} animateOpacity>
+                <Stack
+                    bg={useColorModeValue('gray.100', 'gray.600')}
+                    p={4}
+                    display={{ md: 'none' }}>
+                    <Stack>
+                        <Flex
+                            py={2}
+                            justify={'space-between'}
+                            align={'left'}
+                            _hover={{
+                                textDecoration: 'none',
+                            }}>
+                            <List spacing={4}>
+                                <Link to="/" onClick={onToggle}>
+                                    <ListItem>Dashboard</ListItem>
+                                </Link>
+                                <Link to="/todo-app" onClick={onToggle}>
+                                    <ListItem>Todo App</ListItem>
+                                </Link>
+                                <Link to="/tictactoe-app" onClick={onToggle}>
+                                    <ListItem>Tictactoe App</ListItem>
+                                </Link>
+                            </List>
+                        </Flex>
+                    </Stack>
+                </Stack>
+            </Collapse>
+        </Box>
+    );
+};
+
