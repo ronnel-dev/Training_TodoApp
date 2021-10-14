@@ -1,9 +1,8 @@
 import React from "react";
 import { Container, Stack } from "@chakra-ui/layout";
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./components/Common/Dashboard";
 
 function App() {
-
   return (
     <Stack pt={5}>
       <Container maxW="container.xl">
@@ -11,7 +10,6 @@ function App() {
       </Container>
     </Stack>
   );
-
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { VStack } from '@chakra-ui/layout'
 import React from 'react'
 import Header from './Header'
-import ToDo from './ToDo'
+import ToDo from '../ToDo/ToDo'
 
 export default function TodoApp() {
     return (
